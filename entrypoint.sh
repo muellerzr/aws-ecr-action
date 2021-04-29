@@ -7,6 +7,7 @@ INPUT_TAGS="${INPUT_TAGS:-latest}"
 INPUT_CREATE_REPO="${INPUT_CREATE_REPO:-false}"
 INPUT_SET_REPO_POLICY="${INPUT_SET_REPO_POLICY:-false}"
 INPUT_REPO_POLICY_FILE="${INPUT_REPO_POLICY_FILE:-repo-policy.json}"
+INPUT_LOGIN_VISIBILITY="${INPUT_LOGIN_VISIBILITY:-login}"
 
 function main() {
   sanitize "${INPUT_ACCESS_KEY_ID}" "access_key_id"
@@ -42,7 +43,7 @@ function aws_configure() {
 
 function login() {
   echo "== START LOGIN"
-  LOGIN_COMMAND=$(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  LOGIN_COMMAND=$(aws $INPUT_LOGIN_VISIBILITY get-login --no-include-email --region $AWS_DEFAULT_REGION)
   $LOGIN_COMMAND
   echo "== FINISHED LOGIN"
 }
